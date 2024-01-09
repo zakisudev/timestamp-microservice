@@ -27,10 +27,17 @@ app.get('/api/hello', function (req, res) {
 // API endpoint
 app.get('/api/:date?', function (req, res) {
   const { date } = req.params;
-  let dateObj = new Date(date);
-  if (dateObj.toString() === 'Invalid Date') {
-    dateObj = new Date(parseInt(date));
+  let dateObj;
+
+  if (!date) {
+    dateObj = new Date();
+  } else {
+    dateObj = new Date(date);
+    if (dateObj.toString() === 'Invalid Date') {
+      dateObj = new Date(parseInt(date));
+    }
   }
+
   if (dateObj.toString() === 'Invalid Date') {
     res.json({ error: 'Invalid Date' });
   } else {
